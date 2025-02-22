@@ -84,11 +84,11 @@ try:
                 with col3:
                     if len(next_predictions) >= 4:
                         if all_higher and abs(avg_diff) > 1:
-                            st.success("LONG Signal - Next 4h trend is upward 📈", icon="🔼")
+                            st.success("LONG Signal - Trend is upward 📈", icon="🔼")
                         elif all_lower and abs(avg_diff) > 1:
-                            st.warning("SHORT Signal - Next 4h trend is downward 📉", icon="🔽")
+                            st.warning("SHORT Signal - Ttrend is downward 📉", icon="🔽")
                         else:
-                            st.info("No clear trend - Position not recommended ↔️", icon="ℹ️")
+                            st.info("Position not recommended ↔️", icon="ℹ️")
                     else:
                         st.info("Insufficient prediction data", icon="ℹ️")
 
