@@ -119,21 +119,40 @@ try:
                     go.Scatter(
                         x=actual_df["time"],
                         y=actual_df["price"],
-                        name="Actual",
+                        name="Actual Price",
                         line=dict(color="#00ff88", width=2),
                     )
                 )
 
-                # Add predicted prices
-                predicted_df = pd.DataFrame(ticker_predicted)
-                fig.add_trace(
-                    go.Scatter(
-                        x=predicted_df["time"],
-                        y=predicted_df["price"],
-                        name="Predicted",
-                        line=dict(color="#ff9900", width=2, dash="dot"),
+                # Split predictions into current and future
+                current_time = ticker_actual[-1]["time"]
+                past_predictions = [p for p in ticker_predicted if p["time"] <= current_time]
+                future_predictions = [p for p in ticker_predicted if p["time"] > current_time]
+                future_predictions = [ticker_actual[-1]] + future_predictions
+
+                # Add current predictions
+                if past_predictions:
+                    past_pred_df = pd.DataFrame(past_predictions)
+                    fig.add_trace(
+                        go.Scatter(
+                            x=past_pred_df["time"],
+                            y=past_pred_df["price"],
+                            name="Past Predictions",
+                            line=dict(color="#ff9900", width=2),
+                        )
                     )
-                )
+
+                # Add future predictions
+                if future_predictions:
+                    future_pred_df = pd.DataFrame(future_predictions)
+                    fig.add_trace(
+                        go.Scatter(
+                            x=future_pred_df["time"],
+                            y=future_pred_df["price"],
+                            name="Future Predictions",
+                            line=dict(color="#ff00ff", width=2, dash="dot"),
+                        )
+                    )
 
                 fig.update_layout(
                     height=300,
@@ -143,7 +162,11 @@ try:
                     font=dict(color="#fafafa", size=10),
                     showlegend=True,
                     legend=dict(
-                        orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1
+                        orientation="h", 
+                        yanchor="bottom", 
+                        y=1.02, 
+                        xanchor="right", 
+                        x=1
                     ),
                     xaxis=dict(showgrid=False),
                     yaxis=dict(showgrid=True, gridcolor="#333333"),
