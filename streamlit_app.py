@@ -14,7 +14,7 @@ analyser_collection = DB['analyser_v0']
 charts_collection = DB['charts']
 
 # Basic setup
-st.set_page_config(page_title="Price Prediction Monitor", page_icon="📊", layout="wide")
+st.set_page_config(page_title="Price Prediction Monitor", page_icon="📊", layout="centered")
 
 # Dark theme styling
 st.markdown("""
