@@ -55,7 +55,6 @@ try:
             if ticker_predicted and ticker_actual:
                 # Latest prices
                 current_price = ticker_actual[-1]["price"]
-                predicted_price = ticker_predicted[0]["price"]
 
                 # Get next 4 predicted prices after current time
                 current_time = ticker_actual[-1]["time"]
@@ -77,7 +76,7 @@ try:
                 with col2:
                     st.metric(
                         "Prediction Price",
-                        f"${predicted_price:.4f}",
+                        f"${next_predictions_avg:.4f}",
                         f"{price_diff:+.2f}%",
                         delta_color="normal" if abs(price_diff) <= 5 else "inverse",
                     )
